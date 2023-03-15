@@ -7,8 +7,6 @@ const create = async (purchaseOrder) => {
 };
 
 const query = async (filter, options) => {
-  // eslint-disable-next-line no-console
-  console.log(options);
   return PurchaseOrder.paginate(filter, options);
 };
 
