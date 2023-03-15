@@ -21,13 +21,17 @@ const purchaseOrderSchema = mongoose.Schema(
     wantedDeliveryDate: {
       type: Date,
     },
+    supplier: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: 'supplier',
+      required: true,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-// add plugin that converts mongoose to json
 purchaseOrderSchema.plugin(toJSON);
 purchaseOrderSchema.plugin(paginate);
 
