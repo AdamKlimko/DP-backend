@@ -1,5 +1,5 @@
 const httpStatus = require('http-status');
-const Product = require('../models/product.model');
+const { Product } = require('../models');
 const ApiError = require('../utils/ApiError');
 
 const create = async (product) => {
