@@ -20,10 +20,17 @@ const purchaseOrderSchema = mongoose.Schema(
       },
     ],
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
+
+purchaseOrderSchema.set('toJSON', {
+  transform(doc, ret) {
+    const modifiedRet = { ...ret };
+    modifiedRet.createdAt = doc.createdAt;
+    modifiedRet.updatedAt = doc.updatedAt;
+    return modifiedRet;
+  },
+});
 
 purchaseOrderSchema.plugin(toJSON);
 purchaseOrderSchema.plugin(paginate);

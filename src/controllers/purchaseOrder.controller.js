@@ -17,7 +17,7 @@ const getPurchaseOrders = catchAsync(async (req, res) => {
 
 const getPurchaseOrder = catchAsync(async (req, res) => {
   const purchaseOrder = await purchaseOrderService.getById(req.params.id);
-  res.send(purchaseOrder);
+  res.send(purchaseOrder.toJSON());
 });
 
 const updatePurchaseOrder = catchAsync(async (req, res) => {
