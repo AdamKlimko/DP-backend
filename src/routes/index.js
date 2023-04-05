@@ -5,6 +5,7 @@ const docsRoute = require('./docs.route');
 const purchaseOrderRoute = require('./purchaseOrder.route');
 const purchaseRequisitionRoute = require('./purchaseRequisition.route');
 const customerOrderRoute = require('./customerOrder.route');
+const productRoute = require('./product.route');
 const supplierRoute = require('./supplier.route');
 const config = require('../config/config');
 
@@ -34,6 +35,10 @@ const defaultRoutes = [
   {
     path: '/customerOrders',
     route: customerOrderRoute,
+  },
+  {
+    path: '/products',
+    route: productRoute,
   },
 ];
 

@@ -17,8 +17,9 @@ const createCustomerOrder = {
 
 const getCustomerOrders = {
   query: Joi.object().keys({
-    name: Joi.string(),
-    role: Joi.string(),
+    state: Joi.string().valid('planned', 'released', 'processed', 'closed', 'canceled'),
+    currency: Joi.string().valid('usd', 'eur', 'gbp'),
+    priority: Joi.string().valid('high', 'medium', 'low'),
     sortBy: Joi.string(),
     limit: Joi.number().integer(),
     page: Joi.number().integer(),
@@ -27,13 +28,13 @@ const getCustomerOrders = {
 
 const getCustomerOrder = {
   params: Joi.object().keys({
-    customerOrderId: Joi.string().custom(objectId),
+    id: Joi.string().custom(objectId),
   }),
 };
 
 const updateCustomerOrder = {
   params: Joi.object().keys({
-    customerOrderId: Joi.required().custom(objectId),
+    id: Joi.required().custom(objectId),
   }),
   body: Joi.object()
     .keys({
@@ -50,16 +51,9 @@ const updateCustomerOrder = {
     .min(1),
 };
 
-const deleteCustomerOrder = {
-  params: Joi.object().keys({
-    customerOrderId: Joi.string().custom(objectId),
-  }),
-};
-
 module.exports = {
   createCustomerOrder,
   getCustomerOrders,
   getCustomerOrder,
   updateCustomerOrder,
-  deleteCustomerOrder,
 };

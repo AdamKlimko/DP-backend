@@ -14,6 +14,6 @@ router
   .route('/:id')
   .get(validate(customerOrderValidation.getCustomerOrder), customerOrderController.getCustomerOrder)
   .patch(validate(customerOrderValidation.updateCustomerOrder), customerOrderController.updateCustomerOrder)
-  .delete(validate(customerOrderValidation.deleteCustomerOrder), customerOrderController.deleteCustomerOrder);
+  .delete(validate(customerOrderValidation.getCustomerOrder), customerOrderController.deleteCustomerOrder);
 
 module.exports = router;
