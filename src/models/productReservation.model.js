@@ -6,7 +6,6 @@ const productReservationSchema = mongoose.Schema(
     customerOrder: { type: mongoose.Schema.Types.ObjectId, ref: 'customer-order', required: true },
     product: { type: mongoose.Schema.Types.ObjectId, ref: 'product', required: true },
     reservedQuantity: { type: Number, required: true },
-    productionSeq: { type: mongoose.Schema.Types.ObjectId, required: true },
     location: { type: String, required: true },
   },
   { timestamps: true }

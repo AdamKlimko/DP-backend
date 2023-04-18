@@ -5,7 +5,6 @@ const body = Joi.object().keys({
   customerOrder: Joi.string().custom(objectId).required(),
   product: Joi.string().custom(objectId).required(),
   reservedQuantity: Joi.number().integer().required(),
-  productionSeq: Joi.string().custom(objectId).required(),
   location: Joi.string().required(),
 });
 

@@ -1,7 +1,6 @@
 const httpStatus = require('http-status');
-const CustomerOrder = require('../models/customerOrder.model');
+const { CustomerOrder, ProductOrder } = require('../models');
 const ApiError = require('../utils/ApiError');
-const ProductOrder = require('../models/productOrder.model');
 
 const create = async (customerOrder) => {
   // Create an array of Promises that resolve to new ProductOrder objects

@@ -8,6 +8,7 @@ const customerRoute = require('./customer.route');
 const customerOrderRoute = require('./customerOrder.route');
 const productRoute = require('./product.route');
 const productReservationRoute = require('./productReservation.route');
+const productOrderRoute = require('./productOrder.route');
 const supplierRoute = require('./supplier.route');
 const config = require('../config/config');
 
@@ -49,6 +50,10 @@ const defaultRoutes = [
   {
     path: '/productReservations',
     route: productReservationRoute,
+  },
+  {
+    path: '/productOrders',
+    route: productOrderRoute,
   },
 ];
 
