@@ -1,4 +1,4 @@
-const states = {
+const state = {
   PLANNED: 'planned',
   RELEASED: 'released',
   PROCESSED: 'processed',
@@ -7,5 +7,5 @@ const states = {
 };
 
 module.exports = {
-  states,
+  state,
 };

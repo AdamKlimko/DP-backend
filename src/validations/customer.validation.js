@@ -2,43 +2,46 @@ const Joi = require('joi');
 const { objectId } = require('./custom.validation');
 
 const body = Joi.object().keys({
-  partNumber: Joi.string().required(),
+  name: Joi.string().required(),
   description: Joi.string(),
-  storedQuantity: Joi.number().integer().min(0),
-  uom: Joi.string().required(),
-  size: Joi.string(),
-  billOfMaterials: Joi.array().items(Joi.string()),
+  country: Joi.string(),
 });
 
-const createProduct = {
+const createCustomer = {
   body,
 };
 
-const getProducts = {
+const getCustomers = {
   query: Joi.object().keys({
-    uom: Joi.string(),
     sortBy: Joi.string(),
     limit: Joi.number().integer(),
     page: Joi.number().integer(),
   }),
 };
 
-const getProduct = {
+const getCustomer = {
   params: Joi.object().keys({
     id: Joi.string().custom(objectId),
   }),
 };
 
-const updateProduct = {
+const updateCustomer = {
   params: Joi.object().keys({
     id: Joi.required().custom(objectId),
   }),
-  body: body.min(1),
+  body,
+};
+
+const deleteCustomer = {
+  params: Joi.object().keys({
+    id: Joi.string().custom(objectId),
+  }),
 };
 
 module.exports = {
-  createProduct,
-  getProducts,
-  getProduct,
-  updateProduct,
+  createCustomer,
+  getCustomers,
+  getCustomer,
+  updateCustomer,
+  deleteCustomer,
 };

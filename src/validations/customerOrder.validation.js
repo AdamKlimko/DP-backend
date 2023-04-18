@@ -1,18 +1,20 @@
 const Joi = require('joi');
 const { objectId } = require('./custom.validation');
 
+const body = Joi.object().keys({
+  state: Joi.string().valid('planned', 'released', 'processed', 'closed', 'canceled'),
+  price: Joi.number().required(),
+  currency: Joi.string().valid('usd', 'eur', 'gbp').required(),
+  orderDate: Joi.date().required(),
+  productionSeq: Joi.string().required(),
+  priority: Joi.string().valid('high', 'medium', 'low').required(),
+  orderProfit: Joi.number(),
+  customer: Joi.string().custom(objectId),
+  productOrders: Joi.array().required(),
+});
+
 const createCustomerOrder = {
-  body: Joi.object().keys({
-    state: Joi.string().valid('planned', 'released', 'processed', 'closed', 'canceled').required(),
-    price: Joi.number().required(),
-    currency: Joi.string().valid('usd', 'eur', 'gbp').required(),
-    orderDate: Joi.date().required(),
-    productionSeq: Joi.string().required(),
-    priority: Joi.string().valid('high', 'medium', 'low').required(),
-    orderProfit: Joi.number(),
-    customer: Joi.string().custom(objectId),
-    products: Joi.array().items(Joi.string().custom(objectId)).required(),
-  }),
+  body,
 };
 
 const getCustomerOrders = {
@@ -36,19 +38,7 @@ const updateCustomerOrder = {
   params: Joi.object().keys({
     id: Joi.required().custom(objectId),
   }),
-  body: Joi.object()
-    .keys({
-      state: Joi.string().valid('planned', 'released', 'processed', 'closed', 'canceled'),
-      price: Joi.number(),
-      currency: Joi.string().valid('usd', 'eur', 'gbp'),
-      orderDate: Joi.date(),
-      productionSeq: Joi.string(),
-      priority: Joi.string().valid('high', 'medium', 'low'),
-      orderProfit: Joi.number(),
-      customer: Joi.string().custom(objectId),
-      products: Joi.array().items(Joi.string().custom(objectId)),
-    })
-    .min(1),
+  body: body.min(1),
 };
 
 module.exports = {

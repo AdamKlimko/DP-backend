@@ -13,8 +13,8 @@ const customerOrderSchema = mongoose.Schema(
     productionSeq: { type: String, required: true },
     priority: { type: String, enum: priority, required: true },
     orderProfit: { type: Number },
-    customer: { type: mongoose.SchemaTypes.ObjectId, ref: 'customers' },
-    products: [{ type: mongoose.SchemaTypes.ObjectId, ref: 'products' }],
+    customer: { type: mongoose.SchemaTypes.ObjectId, ref: 'customer' },
+    productOrders: [{ type: mongoose.SchemaTypes.ObjectId, ref: 'product-order' }],
   },
   { timestamps: true }
 );

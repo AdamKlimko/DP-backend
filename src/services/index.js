@@ -7,3 +7,4 @@ module.exports.supplierService = require('./supplier.service');
 module.exports.customerOrderService = require('./customerOrder.service');
 module.exports.productService = require('./product.service');
 module.exports.productReservationService = require('./productReservation.service');
+module.exports.customerService = require('./customer.service');

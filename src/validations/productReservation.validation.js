@@ -1,14 +1,16 @@
 const Joi = require('joi');
 const { objectId } = require('./custom.validation');
 
+const body = Joi.object().keys({
+  customerOrder: Joi.string().custom(objectId).required(),
+  product: Joi.string().custom(objectId).required(),
+  reservedQuantity: Joi.number().integer().required(),
+  productionSeq: Joi.string().custom(objectId).required(),
+  location: Joi.string().required(),
+});
+
 const createProductReservation = {
-  body: Joi.object().keys({
-    customerOrder: Joi.string().custom(objectId).required(),
-    product: Joi.string().custom(objectId).required(),
-    reservedQuantity: Joi.number().integer().required(),
-    productionSeq: Joi.string().custom(objectId).required(),
-    location: Joi.string().required(),
-  }),
+  body,
 };
 
 const getProductReservations = {
@@ -16,6 +18,7 @@ const getProductReservations = {
     sortBy: Joi.string(),
     limit: Joi.number().integer(),
     page: Joi.number().integer(),
+    populate: Joi.string(),
   }),
 };
 
@@ -29,15 +32,7 @@ const updateProductReservation = {
   params: Joi.object().keys({
     id: Joi.required().custom(objectId),
   }),
-  body: Joi.object()
-    .keys({
-      customerOrder: Joi.string().custom(objectId),
-      product: Joi.string().custom(objectId),
-      reservedQuantity: Joi.number(),
-      productionSeq: Joi.string().custom(objectId),
-      location: Joi.string(),
-    })
-    .min(1),
+  body: body.min(1),
 };
 
 module.exports = {
