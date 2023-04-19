@@ -9,7 +9,10 @@ const createCustomer = catchAsync(async (req, res) => {
 });
 
 const getCustomers = catchAsync(async (req, res) => {
-  const filter = pick(req.query, []);
+  const filter = pick(req.query, ['name']);
+  if (filter.name) {
+    filter.name = RegExp(filter.name, 'i');
+  }
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
   const result = await customerService.query(filter, options);
   res.send(result);

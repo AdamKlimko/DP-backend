@@ -15,6 +15,7 @@ const customerOrderSchema = mongoose.Schema(
     orderProfit: { type: Number },
     customer: { type: mongoose.SchemaTypes.ObjectId, ref: 'customer' },
     productOrders: [{ type: mongoose.SchemaTypes.ObjectId, ref: 'product-order' }],
+    productReservations: [{ type: mongoose.SchemaTypes.ObjectId, ref: 'product-reservation' }],
   },
   { timestamps: true }
 );

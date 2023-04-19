@@ -4,7 +4,9 @@ const { CustomerOrder } = require('./index');
 
 const productOrderSchema = mongoose.Schema(
   {
+    customerOrder: { type: mongoose.SchemaTypes.ObjectId, ref: 'customer-order' },
     product: { type: mongoose.SchemaTypes.ObjectId, ref: 'product' },
+    processed: { type: Boolean, required: true, default: false },
     quantity: { type: Number, required: true },
   },
   { timestamps: true }
