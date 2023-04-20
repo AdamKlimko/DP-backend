@@ -9,7 +9,7 @@ const createProduct = catchAsync(async (req, res) => {
 });
 
 const getProducts = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['partNumber', 'id']);
+  const filter = pick(req.query, ['partNumber']);
   if (filter.partNumber) {
     filter.partNumber = RegExp(filter.partNumber, 'i');
   }

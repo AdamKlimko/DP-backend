@@ -31,10 +31,15 @@ const deleteById = async (id) => {
   return customer;
 };
 
+const findCustomersByName = async (name) => {
+  return Customer.find({ name: { $regex: name, $options: 'i' } }).exec();
+};
+
 module.exports = {
   create,
   query,
   getById,
   updateById,
   deleteById,
+  findCustomersByName,
 };

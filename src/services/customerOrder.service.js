@@ -1,18 +1,9 @@
 const httpStatus = require('http-status');
-const { CustomerOrder, ProductOrder } = require('../models');
+const { CustomerOrder } = require('../models');
 const ApiError = require('../utils/ApiError');
 
 const create = async (customerOrder) => {
-  const productOrderPromises = customerOrder.productOrders.map(async (productOrder) => {
-    const newProductOrder = await ProductOrder.create(productOrder);
-    return newProductOrder._id;
-  });
-
-  const productOrderIds = await Promise.all(productOrderPromises);
-
-  const newCustomerOrder = customerOrder;
-  newCustomerOrder.productOrders = productOrderIds;
-  return CustomerOrder.create(newCustomerOrder);
+  return CustomerOrder.create(customerOrder);
 };
 
 const query = async (filter, options) => {
@@ -28,7 +19,8 @@ const getById = async (id) => {
     .populate({
       path: 'productReservations',
       populate: { path: 'productOrder', model: 'product-order' },
-    });
+    })
+    .populate('customer');
   if (!customerOrder) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Customer Order not found');
   }

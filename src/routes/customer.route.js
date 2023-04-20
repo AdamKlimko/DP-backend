@@ -14,6 +14,6 @@ router
   .route('/:id')
   .get(validate(customerValidation.getCustomer), customerController.getCustomer)
   .patch(validate(customerValidation.updateCustomer), customerController.updateCustomer)
-  .delete(validate(customerValidation.deleteCustomer), customerController.deleteCustomer);
+  .delete(validate(customerValidation.getCustomer), customerController.deleteCustomer);
 
 module.exports = router;
