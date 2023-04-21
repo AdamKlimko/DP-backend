@@ -11,7 +11,10 @@ const query = async (filter, options) => {
 };
 
 const getById = async (id) => {
-  const product = await Product.findById(id);
+  const product = await Product.findById(id).populate({
+    path: 'billOfMaterials',
+    populate: { path: 'semiProduct', model: 'semi-product' },
+  });
   if (!product) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Product not found');
   }
@@ -27,7 +30,7 @@ const updateById = async (id, updateBody) => {
 
 const deleteById = async (id) => {
   const product = await getById(id);
-  await product.remove();
+  await product.deleteOne();
   return product;
 };
 

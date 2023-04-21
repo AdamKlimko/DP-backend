@@ -9,9 +9,11 @@ const customerOrderRoute = require('./customerOrder.route');
 const productRoute = require('./product.route');
 const productReservationRoute = require('./productReservation.route');
 const productOrderRoute = require('./productOrder.route');
+const productionOrderRoute = require('./productionOrder.route');
 const supplierRoute = require('./supplier.route');
 const shipmentRoute = require('./shipment.route');
 const semiProductRoute = require('./semiProduct.route');
+const bomItemRoute = require('./bomItem.route');
 const config = require('../config/config');
 
 const router = express.Router();
@@ -42,6 +44,10 @@ const defaultRoutes = [
     route: semiProductRoute,
   },
   {
+    path: '/bomItems',
+    route: bomItemRoute,
+  },
+  {
     path: '/purchaseRequisitions',
     route: purchaseRequisitionRoute,
   },
@@ -64,6 +70,10 @@ const defaultRoutes = [
   {
     path: '/productOrders',
     route: productOrderRoute,
+  },
+  {
+    path: '/productionOrders',
+    route: productionOrderRoute,
   },
 ];
 

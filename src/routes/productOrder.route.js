@@ -12,7 +12,7 @@ router
 
 router
   .route('/:id')
-  .get(validate(productOrderValidation.getProductOrder), productOrderController.getProductOrder)
+  // .get(validate(productOrderValidation.getProductOrder), productOrderController.getProductOrder)
   .patch(validate(productOrderValidation.updateProductOrder), productOrderController.updateProductOrder);
 
 router

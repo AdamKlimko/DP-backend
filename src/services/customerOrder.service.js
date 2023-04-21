@@ -29,16 +29,14 @@ const getById = async (id) => {
 
 const updateById = async (id, updateBody) => {
   const customerOrder = await getById(id);
-  const newCustomerOrder = updateBody;
-  newCustomerOrder.productOrders = customerOrder.productOrders;
-  Object.assign(customerOrder, newCustomerOrder);
+  Object.assign(customerOrder, updateBody);
   await customerOrder.save();
   return customerOrder;
 };
 
 const deleteById = async (id) => {
   const customerOrder = await getById(id);
-  await customerOrder.remove();
+  await customerOrder.deleteOne();
   return customerOrder;
 };
 

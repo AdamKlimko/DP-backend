@@ -8,5 +8,7 @@ module.exports.customer = require('./customer.controller');
 module.exports.productController = require('./product.controller');
 module.exports.productReservationController = require('./productReservation.controller');
 module.exports.productOrderController = require('./productOrder.controller');
+module.exports.productionOrderController = require('./productionOrder.controller');
 module.exports.shipmentController = require('./shipment.controller');
 module.exports.semiProductController = require('./semiProduct.controller');
+module.exports.bomItemController = require('./bomItem.controller');

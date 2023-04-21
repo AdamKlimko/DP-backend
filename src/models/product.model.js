@@ -8,7 +8,7 @@ const productSchema = mongoose.Schema(
     storedQuantity: { type: Number, default: 0, required: true },
     uom: { type: String, required: true },
     size: { type: String },
-    billOfMaterials: [{ type: String }],
+    billOfMaterials: [{ type: mongoose.SchemaTypes.ObjectId, ref: 'bom-item' }],
   },
   { timestamps: true }
 );

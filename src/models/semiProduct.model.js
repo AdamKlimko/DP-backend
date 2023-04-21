@@ -7,6 +7,7 @@ const semiSemiProductSchema = mongoose.Schema(
     description: { type: String },
     manufacturer: { type: String, required: true },
     storedQuantity: { type: Number, default: 0, required: true },
+    uom: { type: String, required: true },
   },
   { timestamps: true }
 );
@@ -23,6 +24,6 @@ semiSemiProductSchema.set('toJSON', {
 semiSemiProductSchema.plugin(toJSON);
 semiSemiProductSchema.plugin(paginate);
 
-const SemiProduct = mongoose.model('semiSemiProduct', semiSemiProductSchema);
+const SemiProduct = mongoose.model('semi-product', semiSemiProductSchema);
 
 module.exports = SemiProduct;

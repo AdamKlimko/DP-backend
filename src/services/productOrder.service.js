@@ -43,11 +43,11 @@ const deleteById = async (customerOrderId, id) => {
     throw new ApiError(httpStatus.NOT_FOUND, 'Customer Order not found');
   }
 
-  await productOrder.remove();
-
   await CustomerOrder.findByIdAndUpdate(customerOrder._id, {
     $pull: { productOrders: productOrder._id },
   });
+
+  await productOrder.deleteOne();
 
   return productOrder;
 };
