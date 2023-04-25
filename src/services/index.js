@@ -9,6 +9,7 @@ module.exports.productOrderService = require('./productOrder.service');
 module.exports.productionOrderService = require('./productionOrder.service');
 module.exports.productService = require('./product.service');
 module.exports.productReservationService = require('./productReservation.service');
+module.exports.semiProductReservationService = require('./semiProductReservation.service');
 module.exports.customerService = require('./customer.service');
 module.exports.shipmentService = require('./shipment.service');
 module.exports.semiProductService = require('./semiProduct.service');

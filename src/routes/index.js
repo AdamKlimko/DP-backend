@@ -8,6 +8,7 @@ const customerRoute = require('./customer.route');
 const customerOrderRoute = require('./customerOrder.route');
 const productRoute = require('./product.route');
 const productReservationRoute = require('./productReservation.route');
+const semiProductReservationRoute = require('./semiProductReservation.route');
 const productOrderRoute = require('./productOrder.route');
 const productionOrderRoute = require('./productionOrder.route');
 const supplierRoute = require('./supplier.route');
@@ -42,6 +43,10 @@ const defaultRoutes = [
   {
     path: '/semiProducts',
     route: semiProductRoute,
+  },
+  {
+    path: '/semiProductReservations',
+    route: semiProductReservationRoute,
   },
   {
     path: '/bomItems',

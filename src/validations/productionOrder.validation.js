@@ -8,6 +8,7 @@ const body = Joi.object().keys({
   startDateTime: Joi.date(),
   endDateTime: Joi.any(),
   priority: Joi.string().valid('high', 'medium', 'low'),
+  semiProductOrders: Joi.array(),
 });
 
 const createProductionOrder = {

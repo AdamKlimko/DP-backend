@@ -16,4 +16,12 @@ router
   .patch(validate(productionOrderValidation.updateProductionOrder), productionOrderController.updateProductionOrder)
   .delete(validate(productionOrderValidation.getProductionOrder), productionOrderController.deleteProductionOrder);
 
+router
+  .route('/:id/semiProductOrders')
+  .get(validate(productionOrderValidation.getProductionOrder), productionOrderController.getSemiProductOrders);
+
+router
+  .route('/:id/semiProductReservations')
+  .get(validate(productionOrderValidation.getProductionOrder), productionOrderController.getSemiProductReservations);
+
 module.exports = router;
