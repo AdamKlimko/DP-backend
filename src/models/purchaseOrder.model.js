@@ -1,24 +1,17 @@
 const mongoose = require('mongoose');
 const { toJSON, paginate } = require('./plugins');
+const { state } = require('../config/state');
+const { currency } = require('../config/currency');
+const { priority } = require('../config/priority');
 
 const purchaseOrderSchema = mongoose.Schema(
   {
-    state: { type: String, required: true },
+    supplier: { type: String, required: true },
+    state: { type: String, enum: state, default: 'planned', required: true },
     price: { type: Number, required: true },
-    currency: { type: String, required: true },
-    promisedDeliveryDate: { type: Date },
-    wantedDeliveryDate: { type: Date },
-    supplier: {
-      type: mongoose.SchemaTypes.ObjectId,
-      ref: 'supplier',
-      required: true,
-    },
-    purchaseRequisitions: [
-      {
-        type: mongoose.SchemaTypes.ObjectId,
-        ref: 'purchase-requisition',
-      },
-    ],
+    currency: { type: String, enum: currency, required: true },
+    priority: { type: String, enum: priority, required: true },
+    wantedDeliveryDate: { type: Date, required: true },
   },
   { timestamps: true }
 );

@@ -2,10 +2,12 @@ const Joi = require('joi');
 const { objectId } = require('./custom.validation');
 
 const body = Joi.object().keys({
-  customerOrder: Joi.string().custom(objectId),
-  product: Joi.string().custom(objectId),
-  processed: Joi.bool(),
-  quantity: Joi.number().integer().min(0),
+  customerOrder: Joi.string().custom(objectId).required(),
+  product: Joi.string().custom(objectId).required(),
+  productionSeq: Joi.string().custom(objectId).required(),
+  state: Joi.string().valid('planned', 'released', 'processed', 'closed', 'canceled').required(),
+  quantity: Joi.number().integer().min(1).required(),
+  unitPrice: Joi.number().integer().min(0).required(),
 });
 
 const createProductOrder = {

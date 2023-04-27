@@ -1,19 +1,9 @@
 const httpStatus = require('http-status');
-const { ProductOrder, CustomerOrder } = require('../models');
+const { ProductOrder } = require('../models');
 const ApiError = require('../utils/ApiError');
 
 const create = async (customerOrderId, productOrder) => {
-  const newProductOrder = await ProductOrder.create(productOrder);
-
-  const customerOrder = await CustomerOrder.findById(customerOrderId);
-  if (!customerOrder) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Customer Order not found');
-  }
-
-  customerOrder.productOrders.push(newProductOrder);
-  await customerOrder.save();
-
-  return newProductOrder;
+  return ProductOrder.create(productOrder);
 };
 
 const query = async (filter, options) => {
@@ -23,7 +13,7 @@ const query = async (filter, options) => {
 const getById = async (id) => {
   const productOrder = await ProductOrder.findById(id);
   if (!productOrder) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'ProductOrder not found');
+    throw new ApiError(httpStatus.NOT_FOUND, 'Product Order not found');
   }
   return productOrder;
 };
@@ -37,18 +27,7 @@ const updateById = async (id, updateBody) => {
 
 const deleteById = async (customerOrderId, id) => {
   const productOrder = await getById(id);
-
-  const customerOrder = await CustomerOrder.findById(customerOrderId);
-  if (!customerOrder) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Customer Order not found');
-  }
-
-  await CustomerOrder.findByIdAndUpdate(customerOrder._id, {
-    $pull: { productOrders: productOrder._id },
-  });
-
   await productOrder.deleteOne();
-
   return productOrder;
 };
 

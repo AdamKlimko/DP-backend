@@ -16,4 +16,12 @@ router
   .patch(validate(customerOrderValidation.updateCustomerOrder), customerOrderController.updateCustomerOrder)
   .delete(validate(customerOrderValidation.getCustomerOrder), customerOrderController.deleteCustomerOrder);
 
+router
+  .route('/:id/productOrders')
+  .get(validate(customerOrderValidation.getCustomerOrder), customerOrderController.getProductOrders);
+
+router
+  .route('/:id/productReservations')
+  .get(validate(customerOrderValidation.getCustomerOrder), customerOrderController.getProductReservations);
+
 module.exports = router;

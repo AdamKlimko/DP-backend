@@ -1,6 +1,16 @@
 const httpStatus = require('http-status');
-const { CustomerOrder } = require('../models');
+const { CustomerOrder, ProductOrder } = require('../models');
 const ApiError = require('../utils/ApiError');
+const { state } = require('../config/state');
+
+const calculatePrice = async (customerOrderId) => {
+  const productOrders = await ProductOrder.find({ customerOrder: customerOrderId });
+  let price = 0;
+  productOrders.forEach((po) => {
+    price += po.unitPrice * po.quantity;
+  });
+  return price;
+};
 
 const create = async (customerOrder) => {
   return CustomerOrder.create(customerOrder);
@@ -29,6 +39,9 @@ const getById = async (id) => {
 
 const updateById = async (id, updateBody) => {
   const customerOrder = await getById(id);
+  if (updateBody.state === state.RELEASED) {
+    customerOrder.price = await calculatePrice(id);
+  }
   Object.assign(customerOrder, updateBody);
   await customerOrder.save();
   return customerOrder;

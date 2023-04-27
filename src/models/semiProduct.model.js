@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { toJSON, paginate } = require('./plugins');
 
-const semiSemiProductSchema = mongoose.Schema(
+const semiProductSchema = mongoose.Schema(
   {
     partNumber: { type: String, required: true },
     description: { type: String },
@@ -12,7 +12,7 @@ const semiSemiProductSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-semiSemiProductSchema.set('toJSON', {
+semiProductSchema.set('toJSON', {
   transform(doc, ret) {
     const modifiedRet = { ...ret };
     modifiedRet.createdAt = doc.createdAt;
@@ -21,9 +21,9 @@ semiSemiProductSchema.set('toJSON', {
   },
 });
 
-semiSemiProductSchema.plugin(toJSON);
-semiSemiProductSchema.plugin(paginate);
+semiProductSchema.plugin(toJSON);
+semiProductSchema.plugin(paginate);
 
-const SemiProduct = mongoose.model('semi-product', semiSemiProductSchema);
+const SemiProduct = mongoose.model('semi-product', semiProductSchema);
 
 module.exports = SemiProduct;

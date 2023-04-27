@@ -1,6 +1,6 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
-const purchaseOrderService = require('../services/purchaseOrder.service');
+const { purchaseOrderService } = require('../services');
 const pick = require('../utils/pick');
 
 const createPurchaseOrder = catchAsync(async (req, res) => {
@@ -30,10 +30,16 @@ const deletePurchaseOrder = catchAsync(async (req, res) => {
   res.status(httpStatus.NO_CONTENT).send();
 });
 
+const processPurchaseOrder = catchAsync(async (req, res) => {
+  const purchaseOrder = await purchaseOrderService.processById(req.params.id, req.body);
+  res.send(purchaseOrder.toJSON());
+});
+
 module.exports = {
   createPurchaseOrder,
   getPurchaseOrders,
   getPurchaseOrder,
   updatePurchaseOrder,
   deletePurchaseOrder,
+  processPurchaseOrder,
 };

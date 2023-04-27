@@ -7,15 +7,13 @@ const { priority } = require('../config/priority');
 const customerOrderSchema = mongoose.Schema(
   {
     state: { type: String, enum: state, default: 'planned', required: true },
-    price: { type: Number, required: true },
+    price: { type: Number },
     currency: { type: String, enum: currency, required: true },
     orderDate: { type: Date, required: true },
-    productionSeq: { type: String, required: true },
+    productionSeq: { type: mongoose.SchemaTypes.ObjectId, default: mongoose.Types.ObjectId, required: true },
     priority: { type: String, enum: priority, required: true },
     orderProfit: { type: Number },
     customer: { type: mongoose.SchemaTypes.ObjectId, ref: 'customer' },
-    productOrders: [{ type: mongoose.SchemaTypes.ObjectId, ref: 'product-order' }],
-    productReservations: [{ type: mongoose.SchemaTypes.ObjectId, ref: 'product-reservation' }],
   },
   { timestamps: true }
 );

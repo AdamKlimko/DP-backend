@@ -2,41 +2,39 @@ const Joi = require('joi');
 const { objectId } = require('./custom.validation');
 
 const body = Joi.object().keys({
+  purchaseOrder: Joi.string().custom(objectId),
+  productionOrder: Joi.string().custom(objectId).required(),
+  semiProduct: Joi.string().custom(objectId).required(),
   state: Joi.string().valid('planned', 'released', 'processed', 'closed', 'canceled').required(),
-  price: Joi.number(),
+  quantity: Joi.number().min(1).required(),
+  unitPrice: Joi.number().min(0).required(),
   currency: Joi.string().valid('usd', 'eur', 'gbp').required(),
-  orderDate: Joi.date().required(),
-  productionSeq: Joi.string().custom(objectId),
-  priority: Joi.string().valid('high', 'medium', 'low').required(),
-  orderProfit: Joi.number(),
-  customer: Joi.string().custom(objectId),
-  productOrders: Joi.array(),
-  productReservations: Joi.array(),
 });
 
-const createCustomerOrder = {
+const createPurchaseRequisition = {
   body,
 };
 
-const getCustomerOrders = {
+const getPurchaseRequisitions = {
   query: Joi.object().keys({
-    productionSeq: Joi.string(),
     state: Joi.string().valid('planned', 'released', 'processed', 'closed', 'canceled'),
     currency: Joi.string().valid('usd', 'eur', 'gbp'),
-    priority: Joi.string().valid('high', 'medium', 'low'),
+    productionOrder: Joi.string(),
+    purchaseOrder: Joi.string(),
+    populate: Joi.string(),
     sortBy: Joi.string(),
     limit: Joi.number().integer(),
     page: Joi.number().integer(),
   }),
 };
 
-const getCustomerOrder = {
+const getPurchaseRequisition = {
   params: Joi.object().keys({
     id: Joi.string().custom(objectId),
   }),
 };
 
-const updateCustomerOrder = {
+const updatePurchaseRequisition = {
   params: Joi.object().keys({
     id: Joi.required().custom(objectId),
   }),
@@ -44,8 +42,8 @@ const updateCustomerOrder = {
 };
 
 module.exports = {
-  createCustomerOrder,
-  getCustomerOrders,
-  getCustomerOrder,
-  updateCustomerOrder,
+  createPurchaseRequisition,
+  getPurchaseRequisitions,
+  getPurchaseRequisition,
+  updatePurchaseRequisition,
 };

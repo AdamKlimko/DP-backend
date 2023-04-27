@@ -27,7 +27,7 @@ const updateById = async (id, updateBody) => {
 
 const deleteById = async (id) => {
   const shipment = await getById(id);
-  await shipment.remove();
+  await shipment.deleteOne();
   return shipment;
 };
 

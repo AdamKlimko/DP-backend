@@ -5,6 +5,9 @@ const { state } = require('../config/state');
 
 const create = async (productionOrder) => {
   const productOrder = await ProductOrder.findById(productionOrder.productOrder);
+  productOrder.state = state.RELEASED;
+  Object.assign(productOrder, productOrder);
+  await productOrder.save();
 
   productOrder.product = await Product.findById(productOrder.product).populate('billOfMaterials');
 
@@ -58,6 +61,10 @@ const updateById = async (id, updateBody) => {
 
 const deleteById = async (id) => {
   const productionOrder = await getById(id);
+  if (productionOrder.state !== state.PLANNED) {
+    throw new ApiError(httpStatus.FORBIDDEN, 'Production Order is already released!');
+  }
+  await SemiProductOrder.deleteMany({ productionOrder: productionOrder.id });
   await productionOrder.deleteOne();
   return productionOrder;
 };

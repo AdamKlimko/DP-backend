@@ -1,13 +1,16 @@
 const mongoose = require('mongoose');
 const { toJSON, paginate } = require('./plugins');
 const { CustomerOrder } = require('./index');
+const { state } = require('../config/state');
 
 const productOrderSchema = mongoose.Schema(
   {
     customerOrder: { type: mongoose.SchemaTypes.ObjectId, ref: 'customer-order' },
     product: { type: mongoose.SchemaTypes.ObjectId, ref: 'product' },
-    processed: { type: Boolean, required: true, default: false },
+    productionSeq: { type: mongoose.SchemaTypes.ObjectId, required: true },
+    state: { type: state, default: 'planned', required: true },
     quantity: { type: Number, required: true },
+    unitPrice: { type: Number, required: true },
   },
   { timestamps: true }
 );

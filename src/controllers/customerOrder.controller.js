@@ -1,6 +1,8 @@
+const { ObjectId } = require('mongoose').Types;
+
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
-const { customerOrderService } = require('../services');
+const { customerOrderService, productOrderService, productReservationService } = require('../services');
 const pick = require('../utils/pick');
 
 const createCustomerOrder = catchAsync(async (req, res) => {
@@ -23,6 +25,22 @@ const getCustomerOrder = catchAsync(async (req, res) => {
   res.send(customerOrder.toJSON());
 });
 
+const getProductOrders = catchAsync(async (req, res) => {
+  const filter = pick(req.query, []);
+  filter.customerOrder = ObjectId(req.params.id);
+  const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
+  const result = await productOrderService.query(filter, options);
+  res.send(result);
+});
+
+const getProductReservations = catchAsync(async (req, res) => {
+  const filter = pick(req.query, []);
+  filter.customerOrder = ObjectId(req.params.id);
+  const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
+  const result = await productReservationService.query(filter, options);
+  res.send(result);
+});
+
 const updateCustomerOrder = catchAsync(async (req, res) => {
   const customerOrder = await customerOrderService.updateById(req.params.id, req.body);
   res.send(customerOrder);
@@ -39,4 +57,6 @@ module.exports = {
   getCustomerOrder,
   updateCustomerOrder,
   deleteCustomerOrder,
+  getProductOrders,
+  getProductReservations,
 };

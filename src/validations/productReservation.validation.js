@@ -2,6 +2,7 @@ const Joi = require('joi');
 const { objectId } = require('./custom.validation');
 
 const body = Joi.object().keys({
+  productStorageItem: Joi.string().custom(objectId),
   customerOrder: Joi.string().custom(objectId),
   productOrder: Joi.string().custom(objectId),
   reservedQuantity: Joi.number().integer().required(),

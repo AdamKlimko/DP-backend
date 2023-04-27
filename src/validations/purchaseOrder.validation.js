@@ -2,48 +2,55 @@ const Joi = require('joi');
 const { objectId } = require('./custom.validation');
 
 const body = Joi.object().keys({
-  productOrder: Joi.string().custom(objectId),
-  productionSeq: Joi.string().custom(objectId),
+  supplier: Joi.string().required(),
   state: Joi.string().valid('planned', 'released', 'processed', 'closed', 'canceled'),
-  wantedDeliveryDate: Joi.date().required(),
-  startDateTime: Joi.date(),
-  endDateTime: Joi.any(),
+  currency: Joi.string().valid('usd', 'eur', 'gbp'),
   priority: Joi.string().valid('high', 'medium', 'low'),
-  semiProductOrders: Joi.array(),
+  wantedDeliveryDate: Joi.date().required(),
 });
 
-const createProductionOrder = {
+const createPurchaseOrder = {
   body,
 };
 
-const getProductionOrders = {
+const getPurchaseOrders = {
   query: Joi.object().keys({
-    productOrder: Joi.custom(objectId),
-    productionSeq: Joi.custom(objectId),
     state: Joi.string().valid('planned', 'released', 'processed', 'closed', 'canceled'),
+    currency: Joi.string().valid('usd', 'eur', 'gbp'),
     priority: Joi.string().valid('high', 'medium', 'low'),
+    populate: Joi.string(),
     sortBy: Joi.string(),
     limit: Joi.number().integer(),
     page: Joi.number().integer(),
   }),
 };
 
-const getProductionOrder = {
+const getPurchaseOrder = {
   params: Joi.object().keys({
     id: Joi.string().custom(objectId),
   }),
 };
 
-const updateProductionOrder = {
+const updatePurchaseOrder = {
   params: Joi.object().keys({
     id: Joi.required().custom(objectId),
   }),
   body: body.min(1),
 };
 
+const processPurchaseOrder = {
+  params: Joi.object().keys({
+    id: Joi.required().custom(objectId),
+  }),
+  body: Joi.object().keys({
+    location: Joi.string().required(),
+  }),
+};
+
 module.exports = {
-  createProductionOrder,
-  getProductionOrders,
-  getProductionOrder,
-  updateProductionOrder,
+  createPurchaseOrder,
+  getPurchaseOrders,
+  getPurchaseOrder,
+  updatePurchaseOrder,
+  processPurchaseOrder,
 };

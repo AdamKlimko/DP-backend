@@ -6,6 +6,7 @@ const { priority } = require('../config/priority');
 const productionOrderSchema = mongoose.Schema(
   {
     productOrder: { type: mongoose.SchemaTypes.ObjectId, ref: 'product-order' },
+    productionSeq: { type: mongoose.SchemaTypes.ObjectId, required: true },
     state: { type: String, enum: state, default: 'planned', required: true },
     wantedDeliveryDate: { type: Date, required: true },
     startDateTime: { type: Date, required: true },

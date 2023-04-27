@@ -1,18 +1,23 @@
 const express = require('express');
-const { purchaseOrderController } = require('../controllers');
+const validate = require('../middlewares/validate');
+const purchaseOrderController = require('../controllers/purchaseOrder.controller');
+const purchaseOrderValidation = require('../validations/purchaseOrder.validation');
 
 const router = express.Router();
 
-// eslint-disable-next-line prettier/prettier
 router
   .route('/')
-  .post(purchaseOrderController.createPurchaseOrder)
-  .get(purchaseOrderController.getPurchaseOrders);
+  .post(validate(purchaseOrderValidation.createPurchaseOrder), purchaseOrderController.createPurchaseOrder)
+  .get(validate(purchaseOrderValidation.getPurchaseOrders), purchaseOrderController.getPurchaseOrders);
 
 router
   .route('/:id')
-  .get(purchaseOrderController.getPurchaseOrder)
-  .patch(purchaseOrderController.updatePurchaseOrder)
-  .delete(purchaseOrderController.deletePurchaseOrder);
+  .get(validate(purchaseOrderValidation.getPurchaseOrder), purchaseOrderController.getPurchaseOrder)
+  .patch(validate(purchaseOrderValidation.updatePurchaseOrder), purchaseOrderController.updatePurchaseOrder)
+  .delete(validate(purchaseOrderValidation.getPurchaseOrder), purchaseOrderController.deletePurchaseOrder);
+
+router
+  .route('/:id/process')
+  .patch(validate(purchaseOrderValidation.processPurchaseOrder), purchaseOrderController.processPurchaseOrder);
 
 module.exports = router;

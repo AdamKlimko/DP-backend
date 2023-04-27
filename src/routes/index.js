@@ -7,6 +7,7 @@ const purchaseRequisitionRoute = require('./purchaseRequisition.route');
 const customerRoute = require('./customer.route');
 const customerOrderRoute = require('./customerOrder.route');
 const productRoute = require('./product.route');
+const productStorageItemRoute = require('./productStorageItem.route');
 const productReservationRoute = require('./productReservation.route');
 const semiProductReservationRoute = require('./semiProductReservation.route');
 const productOrderRoute = require('./productOrder.route');
@@ -14,6 +15,7 @@ const productionOrderRoute = require('./productionOrder.route');
 const supplierRoute = require('./supplier.route');
 const shipmentRoute = require('./shipment.route');
 const semiProductRoute = require('./semiProduct.route');
+const semiProductStorageItemRoute = require('./semiProductStorageItem.route');
 const bomItemRoute = require('./bomItem.route');
 const config = require('../config/config');
 
@@ -33,6 +35,10 @@ const defaultRoutes = [
     route: purchaseOrderRoute,
   },
   {
+    path: '/purchaseRequisitions',
+    route: purchaseRequisitionRoute,
+  },
+  {
     path: '/suppliers',
     route: supplierRoute,
   },
@@ -45,16 +51,16 @@ const defaultRoutes = [
     route: semiProductRoute,
   },
   {
+    path: '/semiProductStorageItems',
+    route: semiProductStorageItemRoute,
+  },
+  {
     path: '/semiProductReservations',
     route: semiProductReservationRoute,
   },
   {
     path: '/bomItems',
     route: bomItemRoute,
-  },
-  {
-    path: '/purchaseRequisitions',
-    route: purchaseRequisitionRoute,
   },
   {
     path: '/customers',
@@ -67,6 +73,10 @@ const defaultRoutes = [
   {
     path: '/products',
     route: productRoute,
+  },
+  {
+    path: '/productStorageItems',
+    route: productStorageItemRoute,
   },
   {
     path: '/productReservations',
