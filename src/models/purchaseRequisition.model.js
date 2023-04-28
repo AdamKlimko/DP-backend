@@ -7,6 +7,7 @@ const purchaseRequisition = mongoose.Schema(
   {
     purchaseOrder: { type: mongoose.SchemaTypes.ObjectId, ref: 'purchase-order' },
     productionOrder: { type: mongoose.SchemaTypes.ObjectId, ref: 'production-order' },
+    semiProductOrder: { type: mongoose.SchemaTypes.ObjectId, ref: 'semi-product-order' },
     semiProduct: { type: mongoose.SchemaTypes.ObjectId, ref: 'semi-product' },
     state: { type: String, enum: state, default: 'planned', required: true },
     quantity: { type: Number, required: true },

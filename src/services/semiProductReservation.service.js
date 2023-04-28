@@ -1,8 +1,22 @@
 const httpStatus = require('http-status');
-const { SemiProductReservation } = require('../models');
+const { SemiProductReservation, SemiProductStorageItem, SemiProduct, SemiProductOrder } = require('../models');
 const ApiError = require('../utils/ApiError');
+const { state } = require('../config/state');
 
 const create = async (semiProductReservation) => {
+  const semiProductStorageItem = await SemiProductStorageItem.findById(semiProductReservation.semiProductStorageItem);
+  // semiProductStorageItem - quantity
+  await SemiProductStorageItem.updateOne(
+    { _id: semiProductStorageItem.id },
+    { $inc: { storedQuantity: -semiProductReservation.reservedQuantity } }
+  );
+  // semiProduct - quantity
+  await SemiProduct.updateOne(
+    { _id: semiProductStorageItem.semiProduct },
+    { $inc: { storedQuantity: -semiProductReservation.reservedQuantity } }
+  );
+  // semiProductOrder = processed
+  await SemiProductOrder.updateOne({ _id: semiProductReservation.semiProductOrder }, { state: state.PROCESSED });
   return SemiProductReservation.create(semiProductReservation);
 };
 

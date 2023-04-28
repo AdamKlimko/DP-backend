@@ -4,6 +4,7 @@ const { objectId } = require('./custom.validation');
 const body = Joi.object().keys({
   purchaseOrder: Joi.string().custom(objectId),
   productionOrder: Joi.string().custom(objectId).required(),
+  semiProductOrder: Joi.string().custom(objectId).required(),
   semiProduct: Joi.string().custom(objectId).required(),
   state: Joi.string().valid('planned', 'released', 'processed', 'closed', 'canceled').required(),
   quantity: Joi.number().min(1).required(),

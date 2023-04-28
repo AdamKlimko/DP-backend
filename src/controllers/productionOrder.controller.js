@@ -10,9 +10,9 @@ const createProductionOrder = catchAsync(async (req, res) => {
 });
 
 const getProductionOrders = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['productOrder', 'state', 'priority']);
-  if (filter.productOrder) {
-    filter.productOrder = ObjectId(filter.productOrder);
+  const filter = pick(req.query, ['productionSeq', 'state', 'priority']);
+  if (filter.productionSeq) {
+    filter.productionSeq = ObjectId(filter.productionSeq);
   }
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
   const result = await productionOrderService.query(filter, options);

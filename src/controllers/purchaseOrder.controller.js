@@ -9,7 +9,7 @@ const createPurchaseOrder = catchAsync(async (req, res) => {
 });
 
 const getPurchaseOrders = catchAsync(async (req, res) => {
-  const filter = pick(req.query, []);
+  const filter = pick(req.query, ['state']);
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
   const result = await purchaseOrderService.query(filter, options);
   res.send(result);

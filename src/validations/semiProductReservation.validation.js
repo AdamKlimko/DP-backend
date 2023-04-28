@@ -2,8 +2,9 @@ const Joi = require('joi');
 const { objectId } = require('./custom.validation');
 
 const body = Joi.object().keys({
-  semiProduct: Joi.string().custom(objectId),
-  productionOrder: Joi.string().custom(objectId),
+  semiProductStorageItem: Joi.string().custom(objectId).required(),
+  productionOrder: Joi.string().custom(objectId).required(),
+  semiProductOrder: Joi.string().custom(objectId).required(),
   reservedQuantity: Joi.number().integer().required(),
   location: Joi.string().required(),
 });
@@ -14,6 +15,7 @@ const createSemiProductReservation = {
 
 const getSemiProductReservations = {
   query: Joi.object().keys({
+    productionOrder: Joi.string().custom(objectId),
     sortBy: Joi.string(),
     limit: Joi.number().integer(),
     page: Joi.number().integer(),

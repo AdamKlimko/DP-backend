@@ -1,8 +1,14 @@
 const httpStatus = require('http-status');
-const { ProductStorageItem } = require('../models');
+const { ProductStorageItem, ProductionOrder, Product } = require('../models');
 const ApiError = require('../utils/ApiError');
+const { state } = require('../config/state');
 
 const create = async (productStorageItem) => {
+  await ProductionOrder.updateOne({ _id: productStorageItem.productionOrder }, { state: state.PROCESSED });
+  await Product.updateOne(
+    { _id: productStorageItem.product },
+    { $inc: { storedQuantity: productStorageItem.storedQuantity } }
+  );
   return ProductStorageItem.create(productStorageItem);
 };
 

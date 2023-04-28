@@ -1,8 +1,10 @@
 const httpStatus = require('http-status');
-const { PurchaseRequisition, PurchaseOrder } = require('../models');
+const { PurchaseRequisition, PurchaseOrder, SemiProductOrder } = require('../models');
 const ApiError = require('../utils/ApiError');
+const { state } = require('../config/state');
 
 const create = async (purchaseRequisition) => {
+  await SemiProductOrder.updateOne({ _id: purchaseRequisition.semiProductOrder }, { state: state.RELEASED });
   const newPurchaseRequisition = purchaseRequisition;
   newPurchaseRequisition.price = purchaseRequisition.unitPrice * purchaseRequisition.quantity;
   return PurchaseRequisition.create(newPurchaseRequisition);

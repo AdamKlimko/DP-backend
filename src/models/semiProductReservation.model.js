@@ -3,8 +3,9 @@ const { toJSON, paginate } = require('./plugins');
 
 const semiProductReservationSchema = mongoose.Schema(
   {
-    semiProduct: { type: mongoose.Schema.Types.ObjectId, ref: 'semi-product', required: true },
+    semiProductStorageItem: { type: mongoose.Schema.Types.ObjectId, ref: 'semi-product-storage-item', required: true },
     productionOrder: { type: mongoose.Schema.Types.ObjectId, ref: 'production-order', required: true },
+    semiProductOrder: { type: mongoose.Schema.Types.ObjectId, ref: 'semi-product-order', required: true },
     reservedQuantity: { type: Number, required: true },
     location: { type: String, required: true },
   },

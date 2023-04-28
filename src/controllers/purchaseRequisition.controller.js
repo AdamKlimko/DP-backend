@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongoose').Types;
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
 const { purchaseRequisitionService } = require('../services');
@@ -9,7 +10,10 @@ const createPurchaseRequisition = catchAsync(async (req, res) => {
 });
 
 const getPurchaseRequisitions = catchAsync(async (req, res) => {
-  const filter = pick(req.query, []);
+  const filter = pick(req.query, ['purchaseOrder']);
+  if (filter.purchaseOrder) {
+    filter.purchaseOrder = ObjectId(filter.purchaseOrder);
+  }
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
   const result = await purchaseRequisitionService.query(filter, options);
   res.send(result);

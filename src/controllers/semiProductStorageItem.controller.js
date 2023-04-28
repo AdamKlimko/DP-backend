@@ -9,7 +9,7 @@ const createSemiProductStorageItem = catchAsync(async (req, res) => {
 });
 
 const getSemiProductStorageItems = catchAsync(async (req, res) => {
-  const filter = pick(req.query, []);
+  const filter = pick(req.query, ['semiProduct']);
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
   const result = await semiProductStorageItemService.query(filter, options);
   res.send(result);

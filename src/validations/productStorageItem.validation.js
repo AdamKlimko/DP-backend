@@ -14,6 +14,7 @@ const createProductStorageItem = {
 
 const getProductStorageItems = {
   query: Joi.object().keys({
+    product: Joi.string(),
     populate: Joi.string(),
     sortBy: Joi.string(),
     limit: Joi.number().integer(),
