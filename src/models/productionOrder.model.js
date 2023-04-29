@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { toJSON, paginate } = require('./plugins');
 const { state } = require('../config/state');
 const { priority } = require('../config/priority');
+const { currency } = require('../config/currency');
 
 const productionOrderSchema = mongoose.Schema(
   {
@@ -12,6 +13,8 @@ const productionOrderSchema = mongoose.Schema(
     startDateTime: { type: Date, required: true },
     endDateTime: { type: Date },
     priority: { type: String, enum: priority, required: true },
+    cost: { type: Number, default: 0, required: true },
+    currency: { type: String, enum: currency, required: true },
   },
   { timestamps: true }
 );

@@ -1,7 +1,27 @@
 const httpStatus = require('http-status');
-const { SemiProductReservation, SemiProductStorageItem, SemiProduct, SemiProductOrder } = require('../models');
+const {
+  SemiProductReservation,
+  SemiProductStorageItem,
+  SemiProduct,
+  SemiProductOrder,
+  ProductionOrder,
+} = require('../models');
 const ApiError = require('../utils/ApiError');
 const { state } = require('../config/state');
+
+const calculateProductionCost = async (productionOrderId) => {
+  const semiProductReservations = await SemiProductReservation.find({ productionOrder: productionOrderId }).populate({
+    path: 'semiProductStorageItem',
+    populate: { path: 'purchaseRequisition', model: 'purchase-requisition' },
+  });
+
+  let orderCost = 0;
+  semiProductReservations.forEach((spr) => {
+    orderCost += spr.semiProductStorageItem.purchaseRequisition.price;
+  });
+
+  return orderCost;
+};
 
 const create = async (semiProductReservation) => {
   const semiProductStorageItem = await SemiProductStorageItem.findById(semiProductReservation.semiProductStorageItem);
@@ -17,7 +37,14 @@ const create = async (semiProductReservation) => {
   );
   // semiProductOrder = processed
   await SemiProductOrder.updateOne({ _id: semiProductReservation.semiProductOrder }, { state: state.PROCESSED });
-  return SemiProductReservation.create(semiProductReservation);
+
+  const newSemiProductReservation = await SemiProductReservation.create(semiProductReservation);
+
+  // update ProductionOrder cost
+  const cost = await calculateProductionCost(semiProductReservation.productionOrder);
+  await ProductionOrder.updateOne({ _id: semiProductReservation.productionOrder }, { cost });
+
+  return newSemiProductReservation;
 };
 
 const query = async (filter, options) => {

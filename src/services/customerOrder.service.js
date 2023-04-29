@@ -1,7 +1,6 @@
 const httpStatus = require('http-status');
 const { CustomerOrder, ProductOrder } = require('../models');
 const ApiError = require('../utils/ApiError');
-const { state } = require('../config/state');
 
 const calculatePrice = async (customerOrderId) => {
   const productOrders = await ProductOrder.find({ customerOrder: customerOrderId });
@@ -21,16 +20,7 @@ const query = async (filter, options) => {
 };
 
 const getById = async (id) => {
-  const customerOrder = await CustomerOrder.findById(id)
-    .populate({
-      path: 'productOrders',
-      populate: { path: 'product', model: 'product' },
-    })
-    .populate({
-      path: 'productReservations',
-      populate: { path: 'productOrder', model: 'product-order' },
-    })
-    .populate('customer');
+  const customerOrder = await CustomerOrder.findById(id).populate('customer');
   if (!customerOrder) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Customer Order not found');
   }
@@ -39,9 +29,9 @@ const getById = async (id) => {
 
 const updateById = async (id, updateBody) => {
   const customerOrder = await getById(id);
-  if (updateBody.state === state.RELEASED) {
-    customerOrder.price = await calculatePrice(id);
-  }
+  // if (updateBody.state === state.RELEASED) {
+  customerOrder.price = await calculatePrice(id);
+  // }
   Object.assign(customerOrder, updateBody);
   await customerOrder.save();
   return customerOrder;

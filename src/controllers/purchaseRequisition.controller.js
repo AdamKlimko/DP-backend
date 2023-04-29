@@ -10,7 +10,10 @@ const createPurchaseRequisition = catchAsync(async (req, res) => {
 });
 
 const getPurchaseRequisitions = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['purchaseOrder']);
+  const filter = pick(req.query, ['productionOrder', 'purchaseOrder']);
+  if (filter.productionOrder) {
+    filter.productionOrder = ObjectId(filter.productionOrder);
+  }
   if (filter.purchaseOrder) {
     filter.purchaseOrder = ObjectId(filter.purchaseOrder);
   }

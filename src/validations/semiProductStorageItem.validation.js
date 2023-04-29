@@ -15,6 +15,7 @@ const createSemiProductStorageItem = {
 const getSemiProductStorageItems = {
   query: Joi.object().keys({
     semiProduct: Joi.string().custom(objectId),
+    inStock: Joi.boolean(),
     populate: Joi.string(),
     sortBy: Joi.string(),
     limit: Joi.number().integer(),

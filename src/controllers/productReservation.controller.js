@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongoose').Types;
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
 const { productReservationService } = require('../services');
@@ -9,7 +10,10 @@ const createProductReservation = catchAsync(async (req, res) => {
 });
 
 const getProductReservations = catchAsync(async (req, res) => {
-  const filter = pick(req.query, []);
+  const filter = pick(req.query, ['customerOrder']);
+  if (filter.customerOrder) {
+    filter.customerOrder = ObjectId(filter.customerOrder);
+  }
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
   const result = await productReservationService.query(filter, options);
   res.send(result);

@@ -10,6 +10,7 @@ const body = Joi.object().keys({
   endDateTime: Joi.any(),
   priority: Joi.string().valid('high', 'medium', 'low'),
   semiProductOrders: Joi.array(),
+  currency: Joi.string().valid('usd', 'eur', 'gbp').required(),
 });
 
 const createProductionOrder = {
@@ -19,7 +20,7 @@ const createProductionOrder = {
 const getProductionOrders = {
   query: Joi.object().keys({
     productOrder: Joi.custom(objectId),
-    productionSeq: Joi.custom(objectId),
+    productionSeq: Joi.string(),
     state: Joi.string().valid('planned', 'released', 'processed', 'closed', 'canceled'),
     priority: Joi.string().valid('high', 'medium', 'low'),
     sortBy: Joi.string(),

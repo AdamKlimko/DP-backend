@@ -1,37 +1,58 @@
 const httpStatus = require('http-status');
-const { ProductReservation, CustomerOrder, ProductOrder, Product } = require('../models');
+const { ProductReservation, ProductOrder, Product, ProductStorageItem, CustomerOrder } = require('../models');
 const ApiError = require('../utils/ApiError');
+const { state } = require('../config/state');
 
-const create = async (reservation) => {
-  const productOrder = await ProductOrder.findById(reservation.productOrder);
-  if (!productOrder) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Product Order not found');
-  }
-  const product = await Product.findById(productOrder.product);
-  if (!product) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Product not found');
-  }
-  const customerOrder = await CustomerOrder.findById(reservation.customerOrder);
-  if (!customerOrder) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Customer Order not found');
-  }
+const calculateCustomerOrderCost = async (customerOrderId) => {
+  const productReservations = await ProductReservation.find({ customerOrder: customerOrderId }).populate({
+    path: 'productStorageItem',
+    populate: { path: 'productionOrder', model: 'production-order' },
+  });
 
-  const newProductReservation = await ProductReservation.create(reservation);
+  let orderCost = 0;
+  productReservations.forEach((pr) => {
+    orderCost += pr.productStorageItem.productionOrder.cost;
+  });
 
-  productOrder.processed = true;
+  return orderCost;
+};
+
+const create = async (productReservation) => {
+  // productOrder state = processed
+  const productOrder = await ProductOrder.findById(productReservation.productOrder);
+  productOrder.state = state.PROCESSED;
   await productOrder.save();
 
-  product.storedQuantity -= reservation.reservedQuantity;
-  await product.save();
+  // product - storedQuantity
+  await Product.updateOne({ _id: productOrder.product }, { $inc: { storedQuantity: -productReservation.reservedQuantity } });
 
-  customerOrder.productReservations.push(newProductReservation);
+  // productStorageItem - storedQuantity
+  await ProductStorageItem.updateOne(
+    { _id: productReservation.productStorageItem },
+    { $inc: { storedQuantity: -productReservation.reservedQuantity } }
+  );
+
+  const newProductReservation = await ProductReservation.create(productReservation);
+
+  // update CustomerOrder cost
+  const orderCost = await calculateCustomerOrderCost(productReservation.customerOrder);
+  const customerOrder = await CustomerOrder.findById(productReservation.customerOrder);
+  customerOrder.orderCost = orderCost;
+  customerOrder.orderProfit = customerOrder.price - orderCost;
   await customerOrder.save();
 
   return newProductReservation;
 };
 
 const query = async (filter, options) => {
-  return ProductReservation.paginate(filter, options);
+  const productReservations = await ProductReservation.paginate(filter, options);
+  return ProductReservation.populate(productReservations.results, {
+    path: 'productOrder',
+    populate: { path: 'product', model: 'product' },
+  }).then((results) => {
+    productReservations.results = results;
+    return productReservations;
+  });
 };
 
 const getById = async (id) => {

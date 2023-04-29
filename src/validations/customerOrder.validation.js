@@ -8,7 +8,6 @@ const body = Joi.object().keys({
   orderDate: Joi.date().required(),
   productionSeq: Joi.string().custom(objectId),
   priority: Joi.string().valid('high', 'medium', 'low').required(),
-  orderProfit: Joi.number(),
   customer: Joi.string().custom(objectId),
   productOrders: Joi.array(),
   productReservations: Joi.array(),
