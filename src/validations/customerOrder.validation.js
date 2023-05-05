@@ -2,15 +2,13 @@ const Joi = require('joi');
 const { objectId } = require('./custom.validation');
 
 const body = Joi.object().keys({
-  state: Joi.string().valid('planned', 'released', 'processed', 'closed', 'canceled').required(),
+  state: Joi.string().valid('planned', 'released', 'processed', 'closed').required(),
   price: Joi.number(),
   currency: Joi.string().valid('usd', 'eur', 'gbp').required(),
   orderDate: Joi.date().required(),
   productionSeq: Joi.string().custom(objectId),
   priority: Joi.string().valid('high', 'medium', 'low').required(),
   customer: Joi.string().custom(objectId),
-  productOrders: Joi.array(),
-  productReservations: Joi.array(),
 });
 
 const createCustomerOrder = {
@@ -20,7 +18,7 @@ const createCustomerOrder = {
 const getCustomerOrders = {
   query: Joi.object().keys({
     productionSeq: Joi.string(),
-    state: Joi.string().valid('planned', 'released', 'processed', 'closed', 'canceled'),
+    state: Joi.string().valid('planned', 'released', 'processed', 'closed'),
     currency: Joi.string().valid('usd', 'eur', 'gbp'),
     priority: Joi.string().valid('high', 'medium', 'low'),
     sortBy: Joi.string(),

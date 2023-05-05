@@ -13,7 +13,7 @@ const createCustomerOrder = catchAsync(async (req, res) => {
 const getCustomerOrders = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['productionSeq', 'state', 'currency', 'priority']);
   if (filter.productionSeq) {
-    filter.productionSeq = RegExp(filter.productionSeq, 'i');
+    filter.productionSeq = ObjectId(filter.productionSeq);
   }
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
   const result = await customerOrderService.query(filter, options);
