@@ -61,7 +61,7 @@ const processById = async (id, body) => {
       ]);
     })
   );
-  purchaseOrder.state = state.PROCESSED;
+  purchaseOrder.state = state.CLOSED;
   await purchaseOrder.save();
   return purchaseOrder;
 };

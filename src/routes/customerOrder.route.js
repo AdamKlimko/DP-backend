@@ -2,26 +2,27 @@ const express = require('express');
 const validate = require('../middlewares/validate');
 const customerOrderController = require('../controllers/customerOrder.controller');
 const customerOrderValidation = require('../validations/customerOrder.validation');
+const auth = require('../middlewares/auth');
 
 const router = express.Router();
 
 router
   .route('/')
-  .post(validate(customerOrderValidation.createCustomerOrder), customerOrderController.createCustomerOrder)
-  .get(validate(customerOrderValidation.getCustomerOrders), customerOrderController.getCustomerOrders);
+  .post(auth(), validate(customerOrderValidation.createCustomerOrder), customerOrderController.createCustomerOrder)
+  .get(auth(), validate(customerOrderValidation.getCustomerOrders), customerOrderController.getCustomerOrders);
 
 router
   .route('/:id')
-  .get(validate(customerOrderValidation.getCustomerOrder), customerOrderController.getCustomerOrder)
-  .patch(validate(customerOrderValidation.updateCustomerOrder), customerOrderController.updateCustomerOrder)
-  .delete(validate(customerOrderValidation.getCustomerOrder), customerOrderController.deleteCustomerOrder);
+  .get(auth(), validate(customerOrderValidation.getCustomerOrder), customerOrderController.getCustomerOrder)
+  .patch(auth(), validate(customerOrderValidation.updateCustomerOrder), customerOrderController.updateCustomerOrder)
+  .delete(auth(), validate(customerOrderValidation.getCustomerOrder), customerOrderController.deleteCustomerOrder);
 
 router
   .route('/:id/productOrders')
-  .get(validate(customerOrderValidation.getCustomerOrder), customerOrderController.getProductOrders);
+  .get(auth(), validate(customerOrderValidation.getCustomerOrder), customerOrderController.getProductOrders);
 
 router
   .route('/:id/productReservations')
-  .get(validate(customerOrderValidation.getCustomerOrder), customerOrderController.getProductReservations);
+  .get(auth(), validate(customerOrderValidation.getCustomerOrder), customerOrderController.getProductReservations);
 
 module.exports = router;

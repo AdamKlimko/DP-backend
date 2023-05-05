@@ -2,18 +2,19 @@ const express = require('express');
 const validate = require('../middlewares/validate');
 const bomItemController = require('../controllers/bomItem.controller');
 const bomItemValidation = require('../validations/bomItem.validation');
+const auth = require('../middlewares/auth');
 
 const router = express.Router();
 
 router
   .route('/:productId')
-  .get(validate(bomItemValidation.getBomItem), bomItemController.getBomItems)
-  .post(validate(bomItemValidation.createBomItem), bomItemController.createBomItem)
-  .patch(validate(bomItemValidation.updateBomItem), bomItemController.updateBomItem);
+  .get(auth(), validate(bomItemValidation.getBomItem), bomItemController.getBomItems)
+  .post(auth(), validate(bomItemValidation.createBomItem), bomItemController.createBomItem)
+  .patch(auth(), validate(bomItemValidation.updateBomItem), bomItemController.updateBomItem);
 
 router
   .route('/:productId/:id')
-  .get(validate(bomItemValidation.getBomItem), bomItemController.getBomItem)
-  .delete(validate(bomItemValidation.getBomItem), bomItemController.deleteBomItem);
+  .get(auth(), validate(bomItemValidation.getBomItem), bomItemController.getBomItem)
+  .delete(auth(), validate(bomItemValidation.getBomItem), bomItemController.deleteBomItem);
 
 module.exports = router;

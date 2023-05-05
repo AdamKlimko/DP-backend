@@ -9,7 +9,7 @@ const createShipment = catchAsync(async (req, res) => {
 });
 
 const getShipments = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['customer']);
+  const filter = pick(req.query, ['customer', 'state']);
   if (filter.customer) {
     const customers = await customerService.findCustomersByName(filter.customer);
     const customerIds = customers.map((customer) => customer.id);

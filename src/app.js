@@ -50,7 +50,7 @@ if (config.env === 'production') {
   app.use('/auth', authLimiter);
 }
 
-// v1 api routes
+// api routes
 app.use('', routes);
 
 // send back a 404 error for any unknown api request
