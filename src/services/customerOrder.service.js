@@ -29,9 +29,7 @@ const getById = async (id) => {
 
 const updateById = async (id, updateBody) => {
   const customerOrder = await getById(id);
-  // if (updateBody.state === state.RELEASED) {
   customerOrder.price = await calculatePrice(id);
-  // }
   Object.assign(customerOrder, updateBody);
   await customerOrder.save();
   return customerOrder;

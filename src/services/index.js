@@ -17,3 +17,4 @@ module.exports.semiProductService = require('./semiProduct.service');
 module.exports.semiProductOrderService = require('./semiProductOrder.service');
 module.exports.semiProductStorageItemService = require('./semiProductStorageItem.service');
 module.exports.bomItemService = require('./bomItem.service');
+module.exports.dashboardService = require('./dashboard.service');

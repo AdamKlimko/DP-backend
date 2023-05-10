@@ -17,6 +17,7 @@ const shipmentRoute = require('./shipment.route');
 const semiProductRoute = require('./semiProduct.route');
 const semiProductStorageItemRoute = require('./semiProductStorageItem.route');
 const bomItemRoute = require('./bomItem.route');
+const dashboardRoute = require('./dashboard.route');
 const config = require('../config/config');
 
 const router = express.Router();
@@ -89,6 +90,10 @@ const defaultRoutes = [
   {
     path: '/productionOrders',
     route: productionOrderRoute,
+  },
+  {
+    path: '/dashboard',
+    route: dashboardRoute,
   },
 ];
 

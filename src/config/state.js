@@ -3,7 +3,7 @@ const state = {
   RELEASED: 'released',
   PROCESSED: 'processed',
   CLOSED: 'closed',
-  CANCELED: 'canceled',
+  // CANCELED: 'canceled',
 };
 
 module.exports = {

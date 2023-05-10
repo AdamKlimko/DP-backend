@@ -15,3 +15,4 @@ module.exports.shipmentController = require('./shipment.controller');
 module.exports.semiProductController = require('./semiProduct.controller');
 module.exports.semiProductStorageItemController = require('./semiProductStorageItem.controller');
 module.exports.bomItemController = require('./bomItem.controller');
+module.exports.dashboardController = require('./dashboard.controller');

@@ -13,3 +13,4 @@ module.exports.shipmentValidation = require('./shipment.validation');
 module.exports.semiProductValidation = require('./semiProduct.validation');
 module.exports.semiProductStorageItemValidation = require('./semiProductStorageItem.validation');
 module.exports.bomItemValidation = require('./bomItem.validation');
+module.exports.dashboardValidation = require('./dashboard.validation');

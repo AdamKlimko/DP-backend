@@ -18,6 +18,7 @@ const createCustomerOrder = {
 const getCustomerOrders = {
   query: Joi.object().keys({
     productionSeq: Joi.string(),
+    populate: Joi.string(),
     state: Joi.string().valid('planned', 'released', 'processed', 'closed'),
     currency: Joi.string().valid('usd', 'eur', 'gbp'),
     priority: Joi.string().valid('high', 'medium', 'low'),
