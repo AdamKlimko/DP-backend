@@ -1,5 +1,5 @@
 const httpStatus = require('http-status');
-const { Product } = require('../models');
+const { Product, ProductOrder } = require('../models');
 const ApiError = require('../utils/ApiError');
 
 const create = async (product) => {
@@ -29,6 +29,10 @@ const updateById = async (id, updateBody) => {
 };
 
 const deleteById = async (id) => {
+  const productOrder = await ProductOrder.findOne({ product: id });
+  if (productOrder) {
+    throw new ApiError(httpStatus.BAD_REQUEST, `Product is used in production seq: ${productOrder.productionSeq}`);
+  }
   const product = await getById(id);
   await product.deleteOne();
   return product;

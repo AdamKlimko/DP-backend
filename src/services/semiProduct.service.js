@@ -1,5 +1,5 @@
 const httpStatus = require('http-status');
-const { SemiProduct } = require('../models');
+const { SemiProduct, BomItem } = require('../models');
 const ApiError = require('../utils/ApiError');
 
 const create = async (semiProduct) => {
@@ -26,6 +26,10 @@ const updateById = async (id, updateBody) => {
 };
 
 const deleteById = async (id) => {
+  const bomItem = await BomItem.findOne({ semiProduct: id });
+  if (bomItem) {
+    throw new ApiError(httpStatus.BAD_REQUEST, `Semi-Product is used some Product's BOM`);
+  }
   const semiProduct = await getById(id);
   await semiProduct.remove();
   return semiProduct;
