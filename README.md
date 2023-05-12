@@ -31,7 +31,7 @@ npm install
 
 6. V MongoDBCompass vytvoríme novú databázu s kolekciou users podľa návodu https://www.mongodb.com/docs/compass/current/databases/
 
-7. Do kolekcie user vložíme používateľa (heslo = "admin")
+7. Do kolekcie users vložíme používateľa (heslo = "admin")
 ```json
 {
   "role": "admin",
